@@ -18,15 +18,15 @@ class Task
     const ACTION_CANCEL = 'cancel';
     const ACTION_START = 'start';
 
-    public int $customer_id;
-    public int $worker_id;
-    private $current_status;
+    public int $customerId;
+    public int $workerId;
+    private string $currentStatus;
 
-    public function __construct(int $customer_id, int $worker_id, string $current_status)
+    public function __construct(int $customerId, int $workerId, string $currentStatus)
     {
-        $this->customerId = $customer_id;
-        $this->workerId = $worker_id;
-        $this->currentStatus = $current_status;
+        $this->customerId = $customerId;
+        $this->workerId = $workerId;
+        $this->currentStatus = $currentStatus;
     }
 
     public function statuses()
@@ -50,11 +50,12 @@ class Task
         ];
     }
 
-    public function getPossibleActions() {
+    public function getPossibleActions(): array
+    {
 
         $actions = $this->actions();
 
-        switch ($this->current_status) {
+        switch ($this->currentStatus) {
             case self::STATUS_NEW:
                 return [
                     $actions[self::ACTION_RESPOND],
@@ -70,7 +71,7 @@ class Task
         }
     }
 
-    public function getNextStatus(string $action)
+    public function getNextStatus(string $action): string
     {
         switch ($action) {
             case self::ACTION_RESPOND:
