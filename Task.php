@@ -12,10 +12,10 @@ class Task
     const STATUS_ROLE_WORKER = 'doer';
 
     const ACTION_CREATE = 'create';
-    const ACTION_RESPOND = 'respond';
-    const ACTION_FINISH = 'finish';
-    const ACTION_FAILURE = 'failure';
-    const ACTION_CANCEL = 'cancel';
+    const ACTION_RESPOND = 'respond'; // откликнуться
+    const ACTION_FINISH = 'finish'; // завершить
+    const ACTION_FAILURE = 'failure'; // провалить
+    const ACTION_CANCEL = 'cancel'; // отменить
     const ACTION_START = 'start';
 
     public int $customerId;
@@ -29,6 +29,10 @@ class Task
         $this->currentStatus = $currentStatus;
     }
 
+    /**
+     * Карта статусов
+     * @return array
+     */
     public function statuses()
     {
         return [
@@ -40,6 +44,10 @@ class Task
         ];
     }
 
+    /**
+     * Карта действий
+     * @return array
+     */
     public function actions()
     {
         return [
@@ -50,9 +58,12 @@ class Task
         ];
     }
 
+    /**
+     * Возможные действия для статуса
+     * @return array
+     */
     public function getPossibleActions(): array
     {
-
         $actions = $this->actions();
 
         switch ($this->currentStatus) {
@@ -71,6 +82,11 @@ class Task
         }
     }
 
+    /**
+     * Получение следующего статуса для действия
+     * @param string $action
+     * @return string|false
+     */
     public function getNextStatus(string $action): string
     {
         switch ($action) {
@@ -86,7 +102,4 @@ class Task
                 return false;
         }
     }
-
-
-
 }
