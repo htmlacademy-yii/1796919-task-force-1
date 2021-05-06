@@ -33,7 +33,7 @@ class Task
      * Карта статусов
      * @return array
      */
-    public function statuses()
+    public function statuses(): array
     {
         return [
             self::STATUS_NEW => 'Новый',
@@ -48,7 +48,7 @@ class Task
      * Карта действий
      * @return array
      */
-    public function actions()
+    public function actions(): array
     {
         return [
             self::ACTION_RESPOND => 'Respond',
@@ -99,7 +99,7 @@ class Task
             case self::ACTION_FINISH:
                 return self::STATUS_COMPLETE;
             default:
-                return false;
+                exit('Неизвестное действие');
         }
     }
 }
