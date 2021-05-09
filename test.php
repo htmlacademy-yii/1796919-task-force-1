@@ -1,6 +1,5 @@
 <?php
-namespace Taskforce;
-
+namespace Taskforce\models;
 require(__DIR__ . '/vendor/autoload.php');
 
 
