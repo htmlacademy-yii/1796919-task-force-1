@@ -1,5 +1,7 @@
 <?php
-include_once "Task.php";
+require(__DIR__ . '/vendor/autoload.php');
+
+use taskforce\models\Task;
 
 print "<b>Possible actions</b> <br>";
 
