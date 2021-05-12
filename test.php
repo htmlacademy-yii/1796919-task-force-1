@@ -1,7 +1,7 @@
 <?php
-namespace Taskforce\models;
 require(__DIR__ . '/vendor/autoload.php');
 
+use Taskforce\models\Task;
 
 print "<b>Possible actions</b> <br>";
 
