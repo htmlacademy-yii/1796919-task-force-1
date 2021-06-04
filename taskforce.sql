@@ -275,7 +275,7 @@ ALTER TABLE `city`
 --
 -- AUTO_INCREMENT для таблицы `comment`
 --
-ALTER TABLE `comment`
+ALTER TABLE `review`
     MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
