@@ -156,11 +156,14 @@ CREATE TABLE `user` (
                         `phone` varchar(128) DEFAULT NULL,
                         `skype` varchar(128) DEFAULT NULL,
                         `telegram` varchar(128) DEFAULT NULL,
+                        `other_contact` text DEFAULT NULL,
                         `show_profile` tinyint NOT NULL DEFAULT '0',
                         `show_contacts` tinyint NOT NULL DEFAULT '0',
                         `notify_message` tinyint NOT NULL DEFAULT '0',
                         `notify_review` tinyint NOT NULL DEFAULT '0',
-                        `notify_action` tinyint NOT NULL DEFAULT '0'
+                        `notify_start` tinyint NOT NULL DEFAULT '0',
+                        `notify_cancel` tinyint NOT NULL DEFAULT '0',
+                        `notify_complete` tinyint NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
