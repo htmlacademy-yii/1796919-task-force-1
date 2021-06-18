@@ -1,6 +1,13 @@
 <?php
 namespace taskforce\models;
 
+use taskforce\models\actions\AbstractAction;
+use taskforce\models\actions\ApproveAction;
+use taskforce\models\actions\CancelAction;
+use taskforce\models\actions\CompleteAction;
+use taskforce\models\actions\RefuseAction;
+use taskforce\models\actions\RespondAction;
+
 class Task
 {
     const STATUS_NEW = 'new';
@@ -12,22 +19,16 @@ class Task
     const STATUS_ROLE_CUSTOMER = 'owner';
     const STATUS_ROLE_WORKER = 'doer';
 
-    const ACTION_CREATE = 'create';
-    const ACTION_RESPOND = 'respond'; // откликнуться
-    const ACTION_FINISH = 'finish'; // завершить
-    const ACTION_FAILURE = 'failure'; // провалить
-    const ACTION_CANCEL = 'cancel'; // отменить
-    const ACTION_START = 'start';
 
-    public int $customerId;
-    public int $workerId;
-    private string $currentStatus;
+    public int $customer_id;
+    public int $worker_id;
+    private string $current_status = self::STATUS_NEW;
 
-    public function __construct(int $customerId, int $workerId, string $currentStatus)
+    public function __construct(int $customer_id, int $worker_id, string $current_status)
     {
-        $this->customerId = $customerId;
-        $this->workerId = $workerId;
-        $this->currentStatus = $currentStatus;
+        $this->customer_id = $customer_id;
+        $this->worker_id = $worker_id;
+        $this->current_status = $current_status;
     }
 
     /**
@@ -52,55 +53,68 @@ class Task
     public function actions(): array
     {
         return [
-            self::ACTION_RESPOND => 'Respond',
-            self::ACTION_CANCEL => 'Cancel',
-            self::ACTION_FAILURE => 'Failure',
-            self::ACTION_FINISH => 'Finish',
+            self::STATUS_NEW => [
+                'respond' => null,
+                'refuse' => null,
+                'cancel' => self::STATUS_CANCELED,
+                'approve' => self::STATUS_WORKING
+            ],
+            self::STATUS_WORKING => [
+                'refuse' => self::STATUS_FAIL,
+                'complete' => self::STATUS_COMPLETE
+            ],
+            self::STATUS_CANCELED => [],
+            self::STATUS_COMPLETE => [],
+            self::STATUS_FAIL => []
         ];
     }
 
-    /**
-     * Возможные действия для статуса
-     * @return array
-     */
-    public function getPossibleActions(): array
-    {
-        $actions = $this->actions();
-
-        switch ($this->currentStatus) {
+    public static function getAvailableActions($status) {
+        switch ($status) {
             case self::STATUS_NEW:
                 return [
-                    $actions[self::ACTION_RESPOND],
-                    $actions[self::ACTION_CANCEL],
+                    new RespondAction(),
+                    new RefuseAction(),
+                    new CancelAction(),
+                    new ApproveAction()
                 ];
             case self::STATUS_WORKING:
                 return [
-                    $actions[self::ACTION_FAILURE],
-                    $actions[self::ACTION_FINISH],
+                    new RefuseAction(),
+                    new CompleteAction()
                 ];
+            case self::STATUS_CANCELED:
+            case self::STATUS_COMPLETE:
+            case self::STATUS_FAIL:
             default:
                 return [];
         }
     }
 
     /**
+     * Возможные действия для статуса
+     * @return array
+     */
+    public function getPossibleActions(string $status, int $user_id): array
+    {
+        $actions = self::getAvailableActions($status);
+        $result = [];
+        foreach($actions as $action) {
+            if($action->checkPermission($this->worker_id, $this->customer_id, $user_id)) {
+                $result[] = $action;
+            }
+        }
+        return $result;
+    }
+
+
+    /**
      * Получение следующего статуса для действия
      * @param string $action
      * @return string|false
      */
-    public function getNextStatus(string $action): string
+    public function getNextStatus(AbstractAction $action): string
     {
-        switch ($action) {
-            case self::ACTION_RESPOND:
-                return self::STATUS_WORKING;
-            case self::ACTION_CANCEL:
-                return self::STATUS_CANCELED;
-            case self::ACTION_FAILURE:
-                return self::STATUS_FAIL;
-            case self::ACTION_FINISH:
-                return self::STATUS_COMPLETE;
-            default:
-                exit('Неизвестное действие');
-        }
+        return self::statuses()[$this->current_status][$action->getValue()];
     }
 }
