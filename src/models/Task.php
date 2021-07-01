@@ -86,7 +86,6 @@ class Task
             case self::STATUS_CANCELED:
             case self::STATUS_COMPLETE:
             case self::STATUS_FAIL:
-            default:
                 return [];
         }
     }
@@ -106,12 +105,11 @@ class Task
         }
         return $result;
     }
-
-
+    
     /**
      * Получение следующего статуса для действия
-     * @param string $action
-     * @return string|false
+     * @param AbstractAction $action
+     * @return array
      */
     public function getNextStatus(AbstractAction $action): string
     {
