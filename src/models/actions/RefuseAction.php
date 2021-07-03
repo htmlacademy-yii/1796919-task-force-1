@@ -5,16 +5,8 @@ use taskforce\models\Task;
 
 class RefuseAction extends AbstractAction
 {
-
-    public function getValue(): string
-    {
-        return 'refuse';
-    }
-
-    public function getName(): string
-    {
-        return 'Отказаться';
-    }
+    protected $value = 'refuse';
+    protected $name = 'Отказаться';
 
     public function checkPermission(int $worker_id, int $customer_id, int $user_id): bool
     {

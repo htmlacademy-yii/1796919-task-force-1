@@ -5,16 +5,8 @@ use taskforce\models\Task;
 
 class RespondAction extends AbstractAction
 {
-
-    public function getValue() :string
-    {
-        return 'respond';
-    }
-
-    public function getName() :string
-    {
-        return 'Откликнуться';
-    }
+    protected $value = 'respond';
+    protected $name = 'Откликнуться';
 
     public function checkPermission(int $worker_id, int $customer_id, int $user_id) :bool
     {

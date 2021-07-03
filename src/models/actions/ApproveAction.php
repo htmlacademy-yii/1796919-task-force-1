@@ -6,15 +6,8 @@ use taskforce\models\Task;
 
 class ApproveAction extends AbstractAction
 {
-    public function getValue() :string
-    {
-        return 'approve';
-    }
-
-    public function getName() :string
-    {
-        return 'Утвердить';
-    }
+    protected $value = 'approve';
+    protected $name = 'Утвердить';
 
     public function checkPermission(int $worker_id, int $customer_id, int $user_id) :bool
     {

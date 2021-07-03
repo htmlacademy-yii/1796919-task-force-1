@@ -5,16 +5,8 @@ use taskforce\models\Task;
 
 class CancelAction extends AbstractAction
 {
-
-    public function getValue() :string
-    {
-        return 'cancel';
-    }
-
-    public function getName() :string
-    {
-        return 'Отменить';
-    }
+    protected $value = 'cancel';
+    protected $name = 'Отменить';
 
     public function checkPermission(int $worker_id, int $customer_id, int $user_id): bool
     {
