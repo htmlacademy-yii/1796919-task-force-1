@@ -16,8 +16,8 @@ class Task
     const STATUS_COMPLETE = 'complete';
     const STATUS_FAIL = 'fail';
 
-    const STATUS_ROLE_CUSTOMER = 'owner';
-    const STATUS_ROLE_WORKER = 'doer';
+//    const STATUS_ROLE_CUSTOMER = 'owner';
+//    const STATUS_ROLE_WORKER = 'doer';
 
 
     public int $customer_id;
@@ -105,7 +105,7 @@ class Task
         }
         return $result;
     }
-    
+
     /**
      * Получение следующего статуса для действия
      * @param AbstractAction $action
