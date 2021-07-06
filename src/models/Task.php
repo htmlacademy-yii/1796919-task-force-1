@@ -1,6 +1,7 @@
 <?php
 namespace taskforce\models;
 
+use taskforce\models\exceptions\StatusException;
 use taskforce\models\actions\AbstractAction;
 use taskforce\models\actions\ApproveAction;
 use taskforce\models\actions\CancelAction;
@@ -28,6 +29,11 @@ class Task
     {
         $this->customer_id = $customer_id;
         $this->worker_id = $worker_id;
+
+        if(!self::checkStatus($current_status)) {
+            throw new StatusException('Некорректный статус');
+        }
+
         $this->current_status = $current_status;
     }
 
@@ -35,7 +41,7 @@ class Task
      * Карта статусов
      * @return array
      */
-    public function statuses(): array
+    public static function statuses(): array
     {
         return [
             self::STATUS_NEW => 'Новый',
@@ -70,6 +76,9 @@ class Task
     }
 
     public static function getAvailableActions($status) {
+        if(!self::checkStatus($status)) {
+            throw new StatusException('Некорректный статус');
+        }
         switch ($status) {
             case self::STATUS_NEW:
                 return [
@@ -96,6 +105,10 @@ class Task
      */
     public function getPossibleActions(string $status, int $user_id): array
     {
+        if(!self::checkStatus($status)) {
+            throw new StatusException('Некорректный статус');
+        }
+
         $actions = self::getAvailableActions($status);
         $result = [];
         foreach($actions as $action) {
@@ -105,7 +118,7 @@ class Task
         }
         return $result;
     }
-    
+
     /**
      * Получение следующего статуса для действия
      * @param AbstractAction $action
@@ -114,5 +127,13 @@ class Task
     public function getNextStatus(AbstractAction $action): string
     {
         return self::statuses()[$this->current_status][$action->getValue()];
+    }
+
+    private static function checkStatus(string $status): bool
+    {
+        if(isset(self::statuses()[$status])) {
+            return true;
+        }
+        return false;
     }
 }
