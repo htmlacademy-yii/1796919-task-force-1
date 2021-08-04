@@ -9,6 +9,9 @@ use Yii;
  *
  * @property int $id
  * @property string $title
+ *
+ * @property Task[] $tasks
+ * @property UserCategory[] $userCategories
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -27,7 +30,8 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['title'], 'required'],
-            [['title'], 'string'],
+            [['title'], 'string', 'max' => 255],
+            [['title'], 'unique'],
         ];
     }
 
@@ -40,5 +44,25 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
         ];
+    }
+
+    /**
+     * Gets query for [[Tasks]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasks()
+    {
+        return $this->hasMany(Task::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UserCategories]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserCategories()
+    {
+        return $this->hasMany(UserCategory::className(), ['category_id' => 'id']);
     }
 }

@@ -12,7 +12,10 @@ use Yii;
  * @property int $worker_id
  * @property string $comment
  * @property int $price
- * @property string $created_at
+ * @property string|null $created_at
+ *
+ * @property User $worker
+ * @property Task $task
  */
 class Response extends \yii\db\ActiveRecord
 {
@@ -34,6 +37,8 @@ class Response extends \yii\db\ActiveRecord
             [['task_id', 'worker_id', 'price'], 'integer'],
             [['comment'], 'string'],
             [['created_at'], 'safe'],
+            [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['worker_id' => 'id']],
+            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
         ];
     }
 
@@ -50,5 +55,25 @@ class Response extends \yii\db\ActiveRecord
             'price' => 'Price',
             'created_at' => 'Created At',
         ];
+    }
+
+    /**
+     * Gets query for [[Worker]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWorker()
+    {
+        return $this->hasOne(User::className(), ['id' => 'worker_id']);
+    }
+
+    /**
+     * Gets query for [[Task]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTask()
+    {
+        return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 }
