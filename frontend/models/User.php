@@ -165,7 +165,7 @@ class User extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getReviews()
+    public function getReviewsAsCustomer()
     {
         return $this->hasMany(Review::className(), ['customer_id' => 'id']);
     }
@@ -175,7 +175,7 @@ class User extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getReviews0()
+    public function getReviewsAsWorker()
     {
         return $this->hasMany(Review::className(), ['worker_id' => 'id']);
     }
@@ -185,7 +185,7 @@ class User extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks()
+    public function getTasksAsCustomer()
     {
         return $this->hasMany(Task::className(), ['customer_id' => 'id']);
     }
@@ -195,7 +195,7 @@ class User extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks0()
+    public function getTasksAsWorker()
     {
         return $this->hasMany(Task::className(), ['worker_id' => 'id']);
     }
