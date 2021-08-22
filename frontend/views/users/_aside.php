@@ -10,6 +10,9 @@ use frontend\models\form\TaskFilterForm;
   <div class="search-task__wrapper">
       <?php
       $form = ActiveForm::begin([
+//          'id' => 'task-filter-form',
+//          'method' => 'get',
+//          'action' => 'index',
           'options' => [
               'class' => 'search-task__form'
           ],
