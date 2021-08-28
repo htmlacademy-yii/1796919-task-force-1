@@ -219,4 +219,9 @@ class User extends \yii\db\ActiveRecord
     {
         return $this->hasMany(UserCategory::className(), ['user_id' => 'id']);
     }
+
+    public function getRate()
+    {
+        return $this->hasMany(Review::className(), ['worker_id' => 'id'])->select('AVG(rate)')->scalar();
+    }
 }
