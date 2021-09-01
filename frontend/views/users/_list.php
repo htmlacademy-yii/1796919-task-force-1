@@ -10,9 +10,7 @@
         </div>
         <div class="feedback-card__top--name user__search-card">
             <p class="link-name"><a href="/user/view/<?php echo $model->id; ?>" class="link-regular"><?php echo $model->name; ?></a></p>
-            <?= $this->render('/users/_rate', [
-                'rate' => $model->rate
-            ]) ?>
+            <?php echo \frontend\widgets\RateWidget::widget(['rating' => $model->rate]) ?>
             <p class="user__search-content"><?php echo $model->about; ?></p>
         </div>
         <span class="new-task__time">Был на сайте <?php echo Yii::$app->formatter->format($model->activity, 'relativeTime'); ?></span>

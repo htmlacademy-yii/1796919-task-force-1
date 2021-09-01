@@ -21,9 +21,7 @@ $this->title = $model->title;
                 </div>
                 <div class="content-view__attach">
                     <h3 class="content-view__h3">Вложения</h3>
-                    <?php foreach ($model->files as $file) { ?>
-                      <a href="#"><?php echo basename($file); ?></a>
-                    <?php } ?>
+                    <?php echo \frontend\widgets\TaskFilesWidget::widget(['files' => $model->files]) ?>
                 </div>
                 <div class="content-view__location">
                     <h3 class="content-view__h3">Расположение</h3>
@@ -55,23 +53,21 @@ $this->title = $model->title;
         <div class="content-view__feedback">
             <h2>Отклики <span>(2)</span></h2>
             <div class="content-view__feedback-wrapper">
-                <?php foreach ($model->responses as $respons) { ?>
+                <?php foreach ($model->responses as $response) { ?>
                   <div class="content-view__feedback-card">
                     <div class="feedback-card__top">
-                      <a href="user.html"><img src="<?php echo $respons->worker->avatar;?>" width="55" height="55"></a>
+                      <a href="user.html"><img src="<?php echo $response->worker->avatar;?>" width="55" height="55"></a>
                       <div class="feedback-card__top--name">
-                        <p><a href="/user/view/<?php echo $respons->worker->id;?>" class="link-regular"><?php echo $respons->worker->name;?></a></p>
-                          <?= $this->render('/users/_rate', [
-                              'rate' => $respons->worker->rate
-                          ]) ?>
+                        <p><a href="/user/view/<?php echo $response->worker->id;?>" class="link-regular"><?php echo $response->worker->name;?></a></p>
+                          <?php echo \frontend\widgets\RateWidget::widget(['rating' => $response->worker->rate]) ?>
                       </div>
-                      <span class="new-task__time"><?php echo Yii::$app->formatter->format($respons->created_at, 'relativeTime'); ?></span>
+                      <span class="new-task__time"><?php echo Yii::$app->formatter->format($response->created_at, 'relativeTime'); ?></span>
                     </div>
                     <div class="feedback-card__content">
                       <p>
-                          <?php echo $respons->comment;?>
+                          <?php echo $response->comment;?>
                       </p>
-                      <span><?php echo $respons->price; ?> ₽</span>
+                      <span><?php echo $response->price; ?> ₽</span>
                     </div>
                     <div class="feedback-card__actions">
                       <a class="button__small-color response-button button"
@@ -93,9 +89,7 @@ $this->title = $model->title;
                     <img src="<?php echo $model->customer->avatar; ?>" width="62" height="62" alt="<?php echo $model->customer->name; ?>">
                     <div class="profile-mini__name five-stars__rate">
                         <p><?php echo $model->customer->name; ?></p>
-                        <?= $this->render('/users/_rate', [
-                            'rate' => $model->customer->rate
-                        ]) ?>
+                        <?php echo \frontend\widgets\RateWidget::widget(['rating' => $model->customer->rate]) ?>
                     </div>
                 </div>
                 <p class="info-customer"><span><?php

@@ -44,8 +44,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                ['pattern'=>'task/view/<id:[0-9]+>', 'defaults'=>['id'=> 0], 'route' => 'tasks/view'],
-                ['pattern'=>'user/view/<id:[0-9]+>', 'defaults'=>['id'=> 0], 'route' => 'users/view'],
+                ['pattern'=>'task/view/<id:[0-9]+>', 'route' => 'tasks/view'],
+                ['pattern'=>'user/view/<id:[0-9]+>', 'route' => 'users/view'],
             ],
         ],
 

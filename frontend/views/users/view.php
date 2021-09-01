@@ -12,25 +12,19 @@ $this->title = $model->name;
                 <h1><?php echo $model->name; ?></h1>
                 <p><?php echo $model->city->title; ?>, <?php echo $age.Yii::$app->utils->int2txt($age, ' лет', ' год', ' года'); ?></p>
                 <div class="profile-mini__name five-stars__rate">
-                    <?= $this->render('/users/_rate', [
-                        'rate' => $model->rate
-                    ]) ?>
+                    <?php echo \frontend\widgets\RateWidget::widget(['rating' => $model->rate]) ?>
                 </div>
                 <b class="done-task">
-                    <?php
-                    if(count($model->tasksAsWorker) == 0) { ?>
-                      нет заказов
-                    <?php } else { ?>
-                  Выполнил <?php echo count($model->tasksAsWorker).Yii::$app->utils->int2txt($age, ' заказов', ' заказ', ' заказа'); ?>
-                    <?php } ?>
+                    <?php echo \frontend\widgets\UserProfileWidget::widget([
+                        'quantity' => count($model->tasksAsWorker),
+                        'template' => 'user_profile_orders',
+                    ]) ?>
                 </b>
               <b class="done-review">
-                  <?php
-                  if(count($model->reviewsAsWorker) == 0) { ?>
-                    нет отзывов
-                  <?php } else { ?>
-                    Получил <?php echo count($model->reviewsAsWorker).Yii::$app->utils->int2txt($model->reviewsAsWorker, ' отзывов', ' отзыв', ' отзыва'); ?>
-                  <?php } ?>
+                  <?php echo \frontend\widgets\UserProfileWidget::widget([
+                          'quantity' => count($model->reviewsAsWorker),
+                          'template' => 'user_profile_reviews',
+                  ]) ?>
                  </b>
             </div>
             <div class="content-view__headline user__card-bookmark user__card-bookmark--current">
