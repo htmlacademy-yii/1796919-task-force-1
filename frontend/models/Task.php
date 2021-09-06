@@ -86,7 +86,7 @@ class Task extends \yii\db\ActiveRecord
      */
     public function getFiles()
     {
-        return $this->hasMany(File::className(), ['task_id' => 'id']);
+        return $this->hasMany(File::className(), ['task_id' => 'id'])->select('path')->column();
     }
 
     /**

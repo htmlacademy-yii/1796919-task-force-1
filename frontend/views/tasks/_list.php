@@ -1,6 +1,9 @@
+<?php
+/* @var $model object */
+?>
 <div class="new-task__card">
     <div class="new-task__title">
-        <a href="view.html" class="link-regular"><h2><?php echo $model->title; ?></h2></a>
+        <a href="/task/view/<?php echo $model->id; ?>" class="link-regular"><h2><?php echo $model->title; ?></h2></a>
         <a class="new-task__type link-regular" href="#"><p><?php echo $model->category->title; ?></p></a>
     </div>
     <div class="new-task__icon new-task__icon--<?php echo $model->category->slug; ?>"></div>
