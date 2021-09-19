@@ -3,33 +3,52 @@
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
+/* @var $cities array */
+
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Signup';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Регистрация аккаунта';
 ?>
-<div class="site-signup">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="main-container page-container">
+  <section class="registration__user">
+    <h1>Регистрация аккаунта</h1>
+    <div class="registration-wrapper">
+        <?php $form = ActiveForm::begin(['id' => 'form-signup',
+            'options' => [
+                'class' => 'registration__user-form form-create'
+            ],
+            'fieldConfig' => [
+                'options' => [
+                    'class' => 'field-container field-container--registration',
+                ],
+                'errorOptions' => ['class' => 'registration__text-error', 'tag' => 'span']
+            ]
+            ]); ?>
+            <?= $form->field($model, 'email', [
+                'labelOptions' => ['class' => '']
+            ])->textInput(['class' => 'input textarea', 'placeholder'=>'']) ?>
 
-    <p>Please fill out the following fields to signup:</p>
+            <?= $form->field($model, 'name', [
+                'labelOptions' => ['class' => '']
+            ])->textInput(['class' => 'input textarea', 'placeholder'=>'']) ?>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+            <?= $form->field($model, 'city', [
+                'labelOptions' => ['class' => '']
+            ])->dropDownList($cities,['class' => 'multiple-select input town-select registration-town']); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'password', [
+                'labelOptions' => ['class' => '']
+            ])->passwordInput(['class' => 'input textarea', 'placeholder'=>'']) ?>
 
-                <?= $form->field($model, 'email') ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
+            <?= \yii\helpers\Html::button('Создать аккаунт', [
+                'type' => 'submit',
+                'class' => 'button button__registration'
+            ]) ?>
+        <?php ActiveForm::end(); ?>
     </div>
+  </section>
+
 </div>
+

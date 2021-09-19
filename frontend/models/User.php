@@ -51,54 +51,54 @@ class User extends \yii\db\ActiveRecord
         return 'user';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['name', 'email', 'password'], 'required'],
-            [['birthday', 'register_at'], 'safe'],
-            [['city_id', 'show_profile', 'show_contacts', 'notify_message', 'notify_review', 'notify_start', 'notify_cancel', 'notify_complete'], 'integer'],
-            [['about', 'other_contact'], 'string'],
-            [['name'], 'string', 'max' => 512],
-            [['email'], 'string', 'max' => 256],
-            [['password'], 'string', 'max' => 32],
-            [['avatar'], 'string', 'max' => 1024],
-            [['phone', 'skype', 'telegram'], 'string', 'max' => 128],
-            [['email'], 'unique'],
-            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
-        ];
-    }
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function rules()
+//    {
+//        return [
+//            [['name', 'email', 'password'], 'required'],
+//            [['birthday', 'register_at'], 'safe'],
+//            [['city_id', 'show_profile', 'show_contacts', 'notify_message', 'notify_review', 'notify_start', 'notify_cancel', 'notify_complete'], 'integer'],
+//            [['about', 'other_contact'], 'string'],
+//            [['name'], 'string', 'max' => 512],
+//            [['email'], 'string', 'max' => 256],
+//            [['password'], 'string', 'max' => 32],
+//            [['avatar'], 'string', 'max' => 1024],
+//            [['phone', 'skype', 'telegram'], 'string', 'max' => 128],
+//            [['email'], 'unique'],
+//            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
+//        ];
+//    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'email' => 'Email',
-            'password' => 'Password',
-            'birthday' => 'Birthday',
-            'register_at' => 'Register At',
-            'city_id' => 'City ID',
-            'avatar' => 'Avatar',
-            'about' => 'About',
-            'phone' => 'Phone',
-            'skype' => 'Skype',
-            'telegram' => 'Telegram',
-            'other_contact' => 'Other Contact',
-            'show_profile' => 'Show Profile',
-            'show_contacts' => 'Show Contacts',
-            'notify_message' => 'Notify Message',
-            'notify_review' => 'Notify Review',
-            'notify_start' => 'Notify Start',
-            'notify_cancel' => 'Notify Cancel',
-            'notify_complete' => 'Notify Complete',
-        ];
-    }
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function attributeLabels()
+//    {
+//        return [
+//            'id' => 'ID',
+//            'name' => 'Name',
+//            'email' => 'Email',
+//            'password' => 'Password',
+//            'birthday' => 'Birthday',
+//            'register_at' => 'Register At',
+//            'city_id' => 'City ID',
+//            'avatar' => 'Avatar',
+//            'about' => 'About',
+//            'phone' => 'Phone',
+//            'skype' => 'Skype',
+//            'telegram' => 'Telegram',
+//            'other_contact' => 'Other Contact',
+//            'show_profile' => 'Show Profile',
+//            'show_contacts' => 'Show Contacts',
+//            'notify_message' => 'Notify Message',
+//            'notify_review' => 'Notify Review',
+//            'notify_start' => 'Notify Start',
+//            'notify_cancel' => 'Notify Cancel',
+//            'notify_complete' => 'Notify Complete',
+//        ];
+//    }
 
     /**
      * Gets query for [[Favorits]].

@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\City;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -152,14 +153,17 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
+        $cities = City::find()->select('title')->indexBy('id')->column();
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
         }
 
         return $this->render('signup', [
             'model' => $model,
+            'cities' => $cities,
         ]);
     }
 
