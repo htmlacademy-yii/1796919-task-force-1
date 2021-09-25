@@ -46,7 +46,6 @@ return [
             'rules' => [
                 ['pattern'=>'task/view/<id:[0-9]+>', 'route' => 'tasks/view'],
                 ['pattern'=>'user/view/<id:[0-9]+>', 'route' => 'users/view'],
-                'signup' => 'site/signup',
             ],
         ],
 
