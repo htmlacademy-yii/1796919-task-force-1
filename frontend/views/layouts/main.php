@@ -99,6 +99,7 @@ AppAsset::register($this);
           </li>
         </ul>
       </div>
+        <?php if (Yii::$app->controller->action->id !== 'signup') {  ?>
       <div class="header__town">
         <select class="multiple-select input town-select" size="1" name="town[]">
           <option value="Moscow">Москва</option>
@@ -147,6 +148,7 @@ AppAsset::register($this);
           </li>
         </ul>
       </div>
+      <?php } ?>
     </div>
   </header>
   <main class="page-main">
