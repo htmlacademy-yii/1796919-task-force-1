@@ -10,7 +10,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
-class TasksController extends \yii\web\Controller
+class TasksController extends InitController
 {
     public function actionIndex()
     {

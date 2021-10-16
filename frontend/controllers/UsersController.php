@@ -11,7 +11,7 @@ use yii\helpers\ArrayHelper;
 use Yii;
 use yii\web\NotFoundHttpException;
 
-class UsersController extends \yii\web\Controller
+class UsersController extends InitController
 {
     public function actionIndex()
     {
@@ -62,5 +62,13 @@ class UsersController extends \yii\web\Controller
             'model' => $model,
             'cities' => $cities,
         ]);
+    }
+
+    public function actionLogout()
+    {
+        if (!Yii::$app->user->isGuest) {
+            Yii::$app->user->logout();
+            return $this->goHome();
+        }
     }
 }

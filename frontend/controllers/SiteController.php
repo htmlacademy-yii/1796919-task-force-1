@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use frontend\models\City;
 use frontend\models\ResendVerificationEmailForm;
+use frontend\models\User;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -19,7 +20,7 @@ use frontend\models\ContactForm;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends InitController
 {
     /**
      * {@inheritdoc}
@@ -28,27 +29,28 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['?'],
+                        'roles' => ['?']
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => false,
+                        'roles' => ['@']
                     ],
                     [
                         'actions' => ['logout'],
                         'allow' => true,
-                        'roles' => ['@'],
-                    ],
+                        'roles' => ['@']
+                    ]
                 ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
+                'denyCallback' => function ($rule, $action) {
+                    return $this->redirect('/tasks');
+                },
+            ]
         ];
     }
 
@@ -68,6 +70,7 @@ class SiteController extends Controller
         ];
     }
 
+
     /**
      * Displays homepage.
      *
@@ -75,31 +78,23 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    }
-
-    /**
-     * Logs in a user.
-     *
-     * @return mixed
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+        $this->layout = '@app/views/layouts/landing';
+        $loginForm = new \frontend\models\form\LoginForm();
+        if (\Yii::$app->request->getIsPost()) {
+            $loginForm->load(\Yii::$app->request->post());
+            if ($loginForm->validate()) {
+                \Yii::$app->user->login(User::findOne(['email' => $loginForm->email]));
+                return $this->redirect('tasks');
+            }
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            $model->password = '';
+        return $this->render('landing',[
+            'model' => $loginForm
+        ]);
 
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
     }
+
+
 
     /**
      * Logs out the current user.
