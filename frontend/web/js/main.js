@@ -66,9 +66,9 @@ var cityDropdown = document.getElementsByClassName('town-select');
 if (cityDropdown.length) {
   cityDropdown = cityDropdown[0];
 
-  cityDropdown.addEventListener('change', function(event) {
-    var selectedCity = event.target.value;
-
-    window.location = '/site/city?city=' + selectedCity;
-  });
+  // cityDropdown.addEventListener('change', function(event) {
+  //   var selectedCity = event.target.value;
+  //
+  //   window.location = '/site/city?city=' + selectedCity;
+  // });
 }

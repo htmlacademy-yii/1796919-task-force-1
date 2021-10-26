@@ -13,11 +13,17 @@ class InitController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'only' => ['index'],
                 'rules' => [
                     [
                         'allow' => true,
                         'roles' => ['@']
-                    ]
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index','signup'],
+                        'roles' => ['?']
+                    ],
                 ]
             ]
         ];

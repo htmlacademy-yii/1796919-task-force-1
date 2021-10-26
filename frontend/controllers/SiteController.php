@@ -36,16 +36,16 @@ class SiteController extends InitController
                         'allow' => true,
                         'roles' => ['?']
                     ],
-                    [
-                        'actions' => ['index'],
-                        'allow' => false,
-                        'roles' => ['@']
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@']
-                    ]
+//                    [
+//                        'actions' => ['index'],
+//                        'allow' => false,
+//                        'roles' => ['@']
+//                    ],
+//                    [
+//                        'actions' => ['logout'],
+//                        'allow' => true,
+//                        'roles' => ['@']
+//                    ]
                 ],
                 'denyCallback' => function ($rule, $action) {
                     return $this->redirect('/tasks');

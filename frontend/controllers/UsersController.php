@@ -7,12 +7,36 @@ use frontend\models\City;
 use frontend\models\SignupForm;
 use frontend\models\User;
 use frontend\models\UsersSearch;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use Yii;
 use yii\web\NotFoundHttpException;
 
 class UsersController extends InitController
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['signup'],
+                        'allow' => true,
+                        'roles' => ['?']
+                    ],
+                    [
+                        //'actions' => ['*'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                ],
+                'denyCallback' => function ($rule, $action) {
+                    return $this->redirect('/');
+                },
+            ]
+        ];
+    }
     public function actionIndex()
     {
         $categories = ArrayHelper::map(Category::find()->all(), 'id', 'title');

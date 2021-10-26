@@ -7,11 +7,30 @@ use frontend\models\form\TaskFilterForm;
 use frontend\models\Task;
 use frontend\models\TaskSearch;
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
 class TasksController extends InitController
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index','view'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                ],
+                'denyCallback' => function ($rule, $action) {
+                    return $this->redirect('/');
+                },
+            ]
+        ];
+    }
     public function actionIndex()
     {
         $categories = ArrayHelper::map(Category::find()->all(), 'id', 'title');
