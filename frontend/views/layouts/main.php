@@ -33,7 +33,7 @@ AppAsset::register($this);
   <header class="page-header">
     <div class="main-container page-header__container">
       <div class="page-header__logo">
-        <a href="landing.html">
+        <a href="/">
           <svg class="page-header__logo-image" id="Layer_2" xmlns="http://www.w3.org/2000/svg"
                viewBox="0 0 1634 646.35">
             <title>taskforce_logo2-01</title>
@@ -132,8 +132,8 @@ AppAsset::register($this);
                alt="Аватар пользователя">
         </a>
         <span class="header__account-name">
-                 Василий
-                </span>
+                 <?php  echo (isset(Yii::$app->user->identity->name))?Yii::$app->user->identity->name:''; ?>
+        </span>
       </div>
       <div class="account__pop-up">
         <ul class="account__pop-up-list">
@@ -144,7 +144,7 @@ AppAsset::register($this);
             <a href="account.html">Настройки</a>
           </li>
           <li>
-            <a href="landing.html">Выход</a>
+            <a href="/users/logout">Выход</a>
           </li>
         </ul>
       </div>

@@ -19,7 +19,7 @@ return [
             return new \taskforce\models\Utils();
         },
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'frontend\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
@@ -44,6 +44,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'landing' => 'site/landing',
                 ['pattern'=>'task/view/<id:[0-9]+>', 'route' => 'tasks/view'],
                 ['pattern'=>'user/view/<id:[0-9]+>', 'route' => 'users/view'],
             ],
