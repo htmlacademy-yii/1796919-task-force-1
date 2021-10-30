@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\FileHelper;
 
 /**
  * This is the model class for table "file".
@@ -34,7 +35,7 @@ class File extends \yii\db\ActiveRecord
             [['user_id', 'task_id', 'path'], 'required'],
             [['user_id', 'task_id'], 'integer'],
             [['path'], 'string', 'max' => 255],
-            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
+         //   [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -70,5 +71,37 @@ class File extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public static function saveFiles(array $files, string $unique_string) : array
+    {
+        $upload_dir = Yii::getAlias('@webroot/upload');
+
+        if(!file_exists($upload_dir)) {
+            FileHelper::createDirectory($upload_dir);
+        }
+
+
+        $result_array = [];
+        foreach ($files as $file) {
+            $new_name = $unique_string.'_' .uniqid() . '.' . $file->getExtension();
+
+            $file->saveAs($upload_dir . '/' . $new_name);
+
+            $task_file = new File();
+            $task_file->user_id = Yii::$app->user->id;
+            $task_file->task_id = 0;
+            $task_file->path = '/upload/' . $new_name;
+            $task_file->unique_string = $unique_string;
+            $task_file->save();
+            $result_array[] = [
+                'path' => $task_file->path,
+                'type' => 'type'
+            ];
+        }
+        /*
+         * На основании это json-массива фронтэндер должен написать вывод загруженных файлов в форму
+        */
+        return $result_array;
     }
 }

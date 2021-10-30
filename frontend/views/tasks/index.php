@@ -6,7 +6,7 @@
 /* @var $searchModel */
 
 use yii\widgets\ListView;
-
+$this->title = 'Список заданий';
 ?>
 <section class="new-task">
   <div class="new-task__wrapper">

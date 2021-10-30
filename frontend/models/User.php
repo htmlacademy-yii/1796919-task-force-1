@@ -21,6 +21,7 @@ use yii\web\IdentityInterface;
  * @property string|null $skype
  * @property string|null $telegram
  * @property string|null $other_contact
+ * @property string|null $role
  * @property int $show_profile
  * @property int $show_contacts
  * @property int $notify_message
