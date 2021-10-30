@@ -86,13 +86,13 @@ AppAsset::register($this);
       <div class="header__nav">
         <ul class="header-nav__list site-list">
           <li class="site-list__item">
-            <a href="/tasks">Задания</a>
+            <a href="<?php echo \yii\helpers\Url::to('/tasks'); ?>">Задания</a>
           </li>
           <li class="site-list__item">
-            <a href="/users">Исполнители</a>
+            <a href="<?php echo \yii\helpers\Url::to('/users'); ?>">Исполнители</a>
           </li>
           <li class="site-list__item">
-            <a href="create.html">Создать задание</a>
+            <a href="<?php echo \yii\helpers\Url::to('/tasks/create'); ?>">Создать задание</a>
           </li>
           <li class="site-list__item">
             <a href="account.html">Мой профиль</a>

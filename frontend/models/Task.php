@@ -45,16 +45,16 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'category_id', 'coordinates', 'city_id', 'customer_id', 'worker_id'], 'required'],
+            [['title', 'category_id', /*'coordinates', 'city_id',*/ 'customer_id', /*'worker_id'*/], 'required'],
             [['description', 'status'], 'string'],
-            [['price', 'category_id', 'city_id', 'customer_id', 'worker_id'], 'integer'],
+            [['price', 'category_id', 'city_id', 'customer_id', /*'worker_id'*/], 'integer'],
             [['created_at', 'finish_at'], 'safe'],
             [['title'], 'string', 'max' => 1024],
-            [['coordinates'], 'string', 'max' => 512],
+           // [['coordinates'], 'string', 'max' => 512],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['customer_id' => 'id']],
-            [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['worker_id' => 'id']],
+            //[['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['worker_id' => 'id']],
         ];
     }
 
@@ -72,7 +72,7 @@ class Task extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'finish_at' => 'Finish At',
             'status' => 'Status',
-            'coordinates' => 'Coordinates',
+           // 'coordinates' => 'Coordinates',
             'city_id' => 'City ID',
             'customer_id' => 'Customer ID',
             'worker_id' => 'Worker ID',

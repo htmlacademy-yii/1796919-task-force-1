@@ -84,7 +84,7 @@ class SiteController extends InitController
             $loginForm->load(\Yii::$app->request->post());
             if ($loginForm->validate()) {
                 \Yii::$app->user->login(User::findOne(['email' => $loginForm->email]));
-                return $this->redirect('tasks');
+                return $this->redirect('/tasks');
             }
         }
 
